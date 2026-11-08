@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Productos - FarmaStock</title>
+</head>
+<body>
+    <h1>Productos</h1>
+    <table border="1" cellpadding="6">
+        <thead>
+            <tr>
+                <th>Código</th>
+                <th>Nombre</th>
+                <th>Presentación</th>
+                <th>Precio (S/)</th>
+                <th>Estado</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="p : ${productos}">
+                <td th:text="${p.codigo}"></td>
+                <td th:text="${p.nombre}"></td>
+                <td th:text="${p.presentacion}"></td>
+                <td th:text="${p.precioUnitario}"></td>
+                <td th:text="${p.estado}"></td>
+            </tr>
+            <tr th:if="${#lists.isEmpty(productos)}">
+                <td colspan="5">No hay productos registrados</td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<body>
+<aside class="sidebar" th:fragment="menu(activo)">
+    <div class="logo">Farma<span>Stock</span></div>
+    <a href="#" th:classappend="${activo == 'inicio'} ? 'activo'">Inicio</a>
+    <a th:href="@{/productos}" th:classappend="${activo == 'productos'} ? 'activo'">Productos</a>
+    <a href="#" th:classappend="${activo == 'inventario'} ? 'activo'">Inventario</a>
+    <a href="#" th:classappend="${activo == 'farmacias'} ? 'activo'">Farmacias</a>
+    <a href="#" th:classappend="${activo == 'pedidos'} ? 'activo'">Pedidos</a>
+</aside>
+</body>
+</html>

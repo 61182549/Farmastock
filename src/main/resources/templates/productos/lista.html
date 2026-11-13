@@ -7,14 +7,14 @@
 </head>
 <body>
     <aside th:replace="~{fragments/menu :: menu('productos')}"></aside>
-
+    
     <main class="contenido">
         <div class="barra">
             <div>
                 <h1>Productos</h1>
                 <p class="subtitulo">Administra los productos farmacéuticos</p>
             </div>
-            <a href="#" class="btn">+ Nuevo producto</a>
+            <a th:href="@{/productos/nuevo}" class="btn">+ Nuevo producto</a>
         </div>
 
         <table class="tabla">
@@ -25,6 +25,7 @@
                     <th>Presentación</th>
                     <th>Precio (S/)</th>
                     <th>Estado</th>
+                    <th>Acciones</th>
                 </tr>
             </thead>
             <tbody>
@@ -33,13 +34,28 @@
                     <td th:text="${p.nombre}"></td>
                     <td th:text="${p.presentacion}"></td>
                     <td th:text="${p.precioUnitario}"></td>
-                    <td><span class="estado" th:text="${p.estado}"></span></td>
+                    <td>
+                        <span class="estado" th:classappend="${p.estado == 'Inactivo'} ? 'inactivo'" th:text="${p.estado}"></span>
+                    </td>
+                    <td>
+                        <div class="acciones-fila">
+                            <a th:href="@{/productos/{id}/editar(id=${p.idProducto})}" class="btn-sec">Editar</a>
+                            <form th:action="@{/productos/{id}/estado(id=${p.idProducto})}" method="post">
+                                <button type="submit" class="btn-sec" th:text="${p.estado == 'Activo'} ? 'Desactivar' : 'Activar'"></button>
+                            </form>
+                            <form th:action="@{/productos/{id}/eliminar(id=${p.idProducto})}" method="post"
+                                  onsubmit="return confirm('¿Eliminar este producto?');">
+                                <button type="submit" class="btn-peligro">Eliminar</button>
+                            </form>
+                        </div>
+                    </td>
                 </tr>
                 <tr th:if="${#lists.isEmpty(productos)}">
-                    <td colspan="5">No hay productos registrados</td>
+                    <td colspan="6">No hay productos registrados</td>
                 </tr>
             </tbody>
         </table>
     </main>
 </body>
 </html>
+

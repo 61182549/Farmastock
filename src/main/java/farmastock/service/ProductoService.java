@@ -31,4 +31,13 @@ public class ProductoService {
     public void eliminar(Long id) {
         productoRepository.deleteById(id);
     }
+    
+    public void cambiarEstado(Long id) {
+        Producto p = buscarPorId(id);
+        if (p != null) {
+            p.setEstado("Activo".equals(p.getEstado()) ? "Inactivo" : "Activo");
+            productoRepository.save(p);
+        }
+    }
 }
+

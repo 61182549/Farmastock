@@ -1,0 +1,2 @@
+INSERT INTO producto (codigo, nombre, presentacion, precio_unitario, estado) VALUES ('PRD-001', 'Amoxicilina 500mg', 'Caja x 100', 25.00, 'Activo');
+INSERT INTO producto (codigo, nombre, presentacion, precio_unitario, estado) VALUES ('PRD-002', 'Ibuprofeno 400mg', 'Caja x 100', 18.00, 'Activo');

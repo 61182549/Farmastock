@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Inventario y lotes - FarmaStock</title>
+    <link rel="stylesheet" th:href="@{/css/estilos.css}">
+</head>
+<body>
+    <aside th:replace="~{fragments/menu :: menu('inventario')}"></aside>
+    <main class="contenido">
+        <div class="barra">
+            <div>
+                <h1>Inventario y lotes</h1>
+                <p class="subtitulo">Existencias por producto, ordenadas por vencimiento</p>
+            </div>
+            <a th:href="@{/inventario/nuevo}" class="btn">+ Nuevo lote</a>
+        </div>
+        <table class="tabla">
+            <thead><tr><th>Producto</th><th>Lote</th><th>Vencimiento</th><th>Cantidad</th><th>Estado</th><th>Acciones</th></tr></thead>
+            <tbody>
+                <tr th:each="l : ${lotes}">
+                    <td th:text="${l.producto.codigo + ' - ' + l.producto.nombre}"></td>
+                    <td th:text="${l.codigo}"></td>
+                    <td th:text="${#temporals.format(l.fechaVencimiento, 'dd/MM/yyyy')}"></td>
+                    <td th:text="${l.cantidad}"></td>
+                    <td><span class="estado" th:classappend="${l.vencido} ? 'inactivo'" th:text="${l.vencido} ? 'Vencido' : 'Vigente'"></span></td>
+                    <td>
+                        <div class="acciones-fila">
+                            <a th:href="@{/inventario/{id}/editar(id=${l.idLote})}" class="btn-sec">Editar</a>
+                            <form th:action="@{/inventario/{id}/eliminar(id=${l.idLote})}" method="post" onsubmit="return confirm('¿Eliminar este lote del inventario?');">
+                                <button type="submit" class="btn-peligro">Eliminar</button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+                <tr th:if="${#lists.isEmpty(lotes)}"><td colspan="6">No hay lotes registrados</td></tr>
+            </tbody>
+        </table>
+    </main>
+</body>
+</html>

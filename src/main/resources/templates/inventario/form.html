@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Lote - FarmaStock</title>
+    <link rel="stylesheet" th:href="@{/css/estilos.css}">
+</head>
+<body>
+    <aside th:replace="~{fragments/menu :: menu('inventario')}"></aside>
+    <main class="contenido">
+        <h1 th:text="${lote.idLote == null} ? 'Nuevo lote' : 'Editar lote'">Lote</h1>
+        <p class="subtitulo">Registra la cantidad disponible y el vencimiento del lote</p>
+        <p th:if="${#lists.isEmpty(productos)}">Primero <a th:href="@{/productos/nuevo}">registra un producto</a> para asociar el lote.</p>
+        <form th:action="@{/inventario/guardar}" th:object="${lote}" method="post" class="formulario">
+            <input type="hidden" th:field="*{idLote}">
+            <div role="alert" th:if="${#fields.hasAnyErrors()}">
+                <p th:each="error : ${#fields.allErrors()}" th:text="${error}"></p>
+            </div>
+            <label for="producto">Producto</label>
+            <select id="producto" th:field="*{producto.idProducto}" required>
+                <option value="">Selecciona un producto</option>
+                <option th:each="p : ${productos}" th:value="${p.idProducto}" th:text="${p.codigo + ' - ' + p.nombre}"></option>
+            </select>
+            <label for="codigo">Código del lote</label>
+            <input type="text" id="codigo" th:field="*{codigo}" maxlength="60" required>
+            <label for="fechaVencimiento">Fecha de vencimiento</label>
+            <input type="date" id="fechaVencimiento" th:field="*{fechaVencimiento}" required>
+            <label for="cantidad">Cantidad disponible</label>
+            <input type="number" id="cantidad" th:field="*{cantidad}" min="0" max="2147483647" step="1" required>
+            <div class="acciones">
+                <button type="submit" class="btn" th:disabled="${#lists.isEmpty(productos)}">Guardar</button>
+                <a th:href="@{/inventario}" class="btn-sec">Cancelar</a>
+            </div>
+        </form>
+    </main>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Inicio - FarmaStock</title>
+    <link rel="stylesheet" th:href="@{/css/estilos.css}">
+    <style>
+        .tarjetas { display: flex; gap: 20px; margin: 24px 0; flex-wrap: wrap; }
+        .tarjeta-resumen { background: #fff; border-radius: 12px; padding: 24px; min-width: 220px; box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1); }
+        .tarjeta-resumen .numero { font-size: 40px; font-weight: 700; margin: 8px 0 0; }
+        .accesos { display: flex; gap: 12px; }
+    </style>
+</head>
+<body>
+    <aside th:replace="~{fragments/menu :: menu('inicio')}"></aside>
+
+    <main class="contenido">
+        <div class="barra">
+            <div>
+                <h1>Bienvenido a FarmaStock</h1>
+                <p class="subtitulo">Resumen general del sistema</p>
+            </div>
+        </div>
+
+        <section class="tarjetas">
+            <div class="tarjeta-resumen">
+                <p>Productos registrados</p>
+                <p class="numero" th:text="${totalProductos}">0</p>
+            </div>
+            <div class="tarjeta-resumen">
+                <p>Lotes en inventario</p>
+                <p class="numero" th:text="${totalLotes}">0</p>
+            </div>
+        </section>
+
+        <div class="accesos">
+            <a th:href="@{/productos}" class="btn">Ir a Productos</a>
+            <a th:href="@{/inventario}" class="btn">Ir a Inventario</a>
+        </div>
+    </main>
+</body>
+</html>

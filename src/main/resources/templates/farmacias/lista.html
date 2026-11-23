@@ -1,0 +1,79 @@
+
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Farmacias - FarmaStock</title>
+    <link rel="stylesheet" th:href="@{/css/estilos.css}">
+</head>
+<body>
+
+    <aside th:replace="~{fragments/menu :: menu('farmacias')}"></aside>
+
+    <main class="contenido">
+
+        <div class="barra">
+            <div>
+                <h1>Farmacias</h1>
+                <p class="subtitulo">Administra las farmacias registradas</p>
+            </div>
+
+            <a th:href="@{/farmacias/nueva}" class="btn">
+                + Nueva farmacia
+            </a>
+        </div>
+
+        <table class="tabla">
+            <thead>
+                <tr>
+                    <th>RUC</th>
+                    <th>Nombre comercial</th>
+                    <th>Contacto</th>
+                    <th>Teléfono</th>
+                    <th>Dirección</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr th:each="f : ${farmacias}">
+                    <td th:text="${f.ruc}"></td>
+                    <td th:text="${f.nombreComercial}"></td>
+                    <td th:text="${f.contacto}"></td>
+                    <td th:text="${f.telefono}"></td>
+                    <td th:text="${f.direccion}"></td>
+
+                    <td>
+                        <span th:text="${f.estado}"
+                              th:class="${f.estado == 'Activo'} ? 'estado activo' : 'estado inactivo'">
+                        </span>
+                    </td>
+
+                    <td>
+                        <a th:href="@{/farmacias/{id}/editar(id=${f.idFarmacia})}"
+                           class="btn-sec">Editar</a>
+
+                        <a th:href="@{/farmacias/{id}/estado(id=${f.idFarmacia})}"
+                           class="btn-sec"
+                           th:text="${f.estado == 'Activo'} ? 'Desactivar' : 'Activar'">
+                        </a>
+
+                        <a th:href="@{/farmacias/{id}/eliminar(id=${f.idFarmacia})}"
+                           class="btn-sec"
+                           onclick="return confirm('¿Seguro que deseas eliminar esta farmacia?')">
+                           Eliminar
+                        </a>
+                    </td>
+                </tr>
+
+                <tr th:if="${#lists.isEmpty(farmacias)}">
+                    <td colspan="7">No hay farmacias registradas.</td>
+                </tr>
+            </tbody>
+        </table>
+
+    </main>
+
+</body>
+</html>

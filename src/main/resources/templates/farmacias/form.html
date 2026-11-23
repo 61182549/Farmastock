@@ -1,0 +1,77 @@
+
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Farmacia - FarmaStock</title>
+    <link rel="stylesheet" th:href="@{/css/estilos.css}">
+</head>
+<body>
+
+    <aside th:replace="~{fragments/menu :: menu('farmacias')}"></aside>
+
+    <main class="contenido">
+
+        <h1 th:text="${farmacia.idFarmacia == null} ?
+            'Nueva farmacia' : 'Editar farmacia'">
+        </h1>
+
+        <p class="subtitulo">
+            Completa los datos de la farmacia
+        </p>
+
+        <form th:action="@{/farmacias/guardar}"
+              th:object="${farmacia}"
+              method="post">
+
+            <input type="hidden" th:field="*{idFarmacia}">
+
+            <label>RUC</label>
+            <input type="text"
+                   th:field="*{ruc}"
+                   maxlength="11"
+                   required>
+
+            <label>Nombre comercial</label>
+            <input type="text"
+                   th:field="*{nombreComercial}"
+                   required>
+
+            <label>Contacto</label>
+            <input type="text"
+                   th:field="*{contacto}"
+                   required>
+
+            <label>Teléfono</label>
+            <input type="text"
+                   th:field="*{telefono}"
+                   required>
+
+            <label>Dirección</label>
+            <input type="text"
+                   th:field="*{direccion}"
+                   required>
+
+            <label>Estado</label>
+            <select th:field="*{estado}" required>
+                <option value="">Selecciona un estado</option>
+                <option value="Activo">Activo</option>
+                <option value="Inactivo">Inactivo</option>
+            </select>
+
+            <div class="acciones">
+                <button type="submit" class="btn">
+                    Guardar
+                </button>
+
+                <a th:href="@{/farmacias}" class="btn-sec">
+                    Cancelar
+                </a>
+            </div>
+
+        </form>
+
+    </main>
+
+</body>
+</html>
